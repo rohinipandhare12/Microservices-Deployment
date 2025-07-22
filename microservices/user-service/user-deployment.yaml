@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: user
+        image: nikhilam07/user-service:latest
+        ports:
+        - containerPort: 5000
+        resources:
+           requests:
+              cpu: "100m"
+           limits:
+              cpu: "250m"
+
