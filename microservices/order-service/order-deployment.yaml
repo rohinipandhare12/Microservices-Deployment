@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order-container
+          image: nikhilam07/order-service:latest  # Replace with your actual Docker Hub image
+          ports:
+            - containerPort: 5000
+          resources:
+             requests:
+                cpu: "100m" 
+             limits:
+                cpu: "250m"
+          volumeMounts:
+            - mountPath: "/data"
+              name: order-storage
+      volumes:
+         - name: order-storage
+           persistentVolumeClaim:
+            claimName: order-pvc
